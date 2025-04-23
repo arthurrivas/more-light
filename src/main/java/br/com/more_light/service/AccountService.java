@@ -4,6 +4,7 @@ import br.com.more_light.domain.Account;
 import br.com.more_light.dto.AccountDTO;
 import br.com.more_light.mapper.AccountMapper;
 import br.com.more_light.repository.AccountRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,15 +29,15 @@ public class AccountService {
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + id));
     }
 
+    @Transactional
     public Account create(Account account) {
         return accountRepository.save(account);
     }
 
+    @Transactional
     public Account update(Long id, Account account) {
-        Account existingAccount = findById(id);
-        existingAccount.setUsername(account.getUsername());
-        existingAccount.setPassword(account.getPassword());
-        return accountRepository.save(existingAccount);
+        account.setId(id);
+        return accountRepository.save(account);
     }
 
     public void delete(Long id) {

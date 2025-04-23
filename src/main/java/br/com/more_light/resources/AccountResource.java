@@ -39,10 +39,10 @@ public class AccountResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Account> update(@PathVariable Long id, @RequestBody Account accountDTO) {
-
-        Account updatedAccount = accountService.update(id, accountDTO);
-        return ResponseEntity.ok(updatedAccount);
+    public ResponseEntity<Account> update(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
+        Account account = accountService.accountDTOToAccount(accountDTO);
+        account = accountService.update(id, account);
+        return ResponseEntity.ok(account);
     }
 
     @DeleteMapping("/{id}")
