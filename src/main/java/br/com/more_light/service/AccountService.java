@@ -29,12 +29,10 @@ public class AccountService {
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + id));
     }
 
-    @Transactional
     public Account create(Account account) {
         return accountRepository.save(account);
     }
 
-    @Transactional
     public Account update(Long id, Account account) {
         account.setId(id);
         return accountRepository.save(account);

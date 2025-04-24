@@ -1,21 +1,25 @@
 package br.com.more_light.resources;
 
 import br.com.more_light.domain.Account;
+import br.com.more_light.domain.Person;
 import br.com.more_light.dto.AccountDTO;
 import br.com.more_light.service.AccountService;
+import br.com.more_light.service.PersonService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/account")
 public class AccountResource {
 
     private final AccountService accountService;
+    private final PersonService personService;
 
-    public AccountResource(AccountService accountService) {
+    public AccountResource(AccountService accountService, PersonService personService) {
         this.accountService = accountService;
+        this.personService = personService;
     }
 
     @GetMapping

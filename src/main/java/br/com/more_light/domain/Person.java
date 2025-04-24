@@ -1,29 +1,31 @@
 package br.com.more_light.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-public class Account {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(nullable = false)
-    private String username;
-
+    private String name;
     @Column(nullable = false)
-    private String email;
-
+    private String cpf;
     @Column(nullable = false)
-    private String password;
+    private Date birthday;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_person", referencedColumnName = "id")
-    private Person person;
-
+    @OneToOne(mappedBy = "person")
+    private Account account;
 }

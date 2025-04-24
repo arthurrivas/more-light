@@ -1,9 +1,16 @@
 package br.com.more_light.dto;
 
-import lombok.Data;
+import br.com.more_light.domain.Person;
+import lombok.*;
 
-@Data
+import java.util.Date;
+
+@Getter
+@Setter
 public class AccountDTO {
     private Long id;
     private String username;
+    private String email;
+    private String password;
+    private PersonDTO personDTO;
 }
