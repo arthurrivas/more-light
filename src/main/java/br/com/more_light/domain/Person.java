@@ -1,5 +1,6 @@
 package br.com.more_light.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +28,6 @@ public class Person {
     private Date birthday;
 
     @OneToOne(mappedBy = "person")
+    @JsonBackReference
     private Account account;
 }
