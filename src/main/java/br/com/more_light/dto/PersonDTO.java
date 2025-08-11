@@ -1,6 +1,8 @@
 package br.com.more_light.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
 
@@ -9,7 +11,12 @@ import java.util.Date;
 @Setter
 public class PersonDTO {
     private Long id;
+
+    @NotBlank
     private String name;
+
+    @CPF
     private String cpf;
+
     private Date birthday;
 }

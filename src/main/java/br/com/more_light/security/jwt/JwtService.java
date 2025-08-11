@@ -1,6 +1,7 @@
 package br.com.more_light.security.jwt;
 
 
+import br.com.more_light.domain.Account;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -26,7 +27,7 @@ public class JwtService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
-    // Extrai o email (username) de dentro do token JWT
+    // Extrai o email de dentro do token JWT
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -43,10 +44,11 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        String email = ((Account) userDetails).getEmail();
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername()) // Define o "dono" do token (no nosso caso, o email)
-                .setIssuedAt(new Date(System.currentTimeMillis())) // Data de criação
+                .setSubject(email)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration)) // Data de expiração
                 .signWith(SignatureAlgorithm.HS256, getSignInKey()) // Assina o token com a chave secreta
                 .compact();
@@ -56,7 +58,7 @@ public class JwtService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         // O token é válido se o username dentro dele é o mesmo do usuário E se o token não expirou
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        return (username.equals(((Account) userDetails).getEmail())) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
@@ -67,7 +69,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    // Método interno para abrir o token e ler todas as informações
+    // Metodo interno para abrir o token e ler todas as informações
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey())
@@ -76,7 +78,7 @@ public class JwtService {
                 .getBody();
     }
 
-    // Pega a chave secreta em Base64 e a converte para um objeto Key que a biblioteca pode usar
+    // Pega a chave secreta em Base64 e a converte para um objeto Key
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);

@@ -4,21 +4,21 @@ import br.com.more_light.domain.Account;
 import br.com.more_light.dto.AccountDTO;
 import br.com.more_light.mapper.AccountMapper;
 import br.com.more_light.repository.AccountRepository;
-import jakarta.transaction.Transactional;
+import br.com.more_light.repository.specification.AccountSpecification;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
-
-    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper) {
-        this.accountRepository = accountRepository;
-        this.accountMapper = accountMapper;
-    }
 
     public List<Account> findAll() {
         return accountRepository.findAll();
@@ -38,6 +38,12 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    public Account deactivate(Long id) {
+        Account account = findById(id);
+        account.setActive(false);
+        return accountRepository.save(account);
+    }
+
     public void delete(Long id) {
         Account account = findById(id);
         accountRepository.delete(account);
@@ -49,5 +55,14 @@ public class AccountService {
 
     public AccountDTO accountToAccountDTO(Account account) {
         return accountMapper.accountToAccountDTO(account);
+    }
+
+    public Page<Account> findAllPagedWithFilters(String email, String username, Boolean active, String personName, String personCpf, Pageable pageable) {
+        Specification<Account> spec = Specification.where(AccountSpecification.emailContains(email))
+                .and(AccountSpecification.usernameContains(username))
+                .and(AccountSpecification.isActive(active))
+                .and(AccountSpecification.personNameContains(personName))
+                .and(AccountSpecification.personCpfContains(personCpf));
+        return accountRepository.findAll(spec, pageable);
     }
 }

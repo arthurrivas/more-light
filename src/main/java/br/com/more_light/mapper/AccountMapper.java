@@ -12,13 +12,13 @@ public interface AccountMapper {
     @Mapping(target = "username", source = "username")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "password", source = "password")
-    @Mapping(target = "person", source = "personDTO")
+    @Mapping(target = "person", source = "person")
     Account accountDtoToAccount(AccountDTO accountDTO);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "username", source = "username")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "password", source = "password")
-    @Mapping(target = "personDTO", source = "person")
+    @Mapping(target = "person", source = "person")
     AccountDTO accountToAccountDTO(Account account);
 }
