@@ -27,10 +27,9 @@ public class PersonService {
                 .collect(Collectors.toList());
     }
 
-    public PersonDTO getPersonById(Long id) {
-        Person person = personRepository.findById(id)
+    public Person getById(Long id) {
+        return personRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Person not found"));
-        return personMapper.personToPersonDTO(person);
     }
 
     public PersonDTO createPerson(PersonDTO personDTO) {
@@ -51,5 +50,9 @@ public class PersonService {
 
     public void deletePerson(Long id) {
         personRepository.deleteById(id);
+    }
+
+    public PersonDTO toDTO(Person person) {
+        return personMapper.personToPersonDTO(person);
     }
 }

@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/account")
 public class AccountResource {
@@ -19,12 +17,6 @@ public class AccountResource {
 
     public AccountResource(AccountService accountService) {
         this.accountService = accountService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Account>> findAll() {
-        List<Account> accounts = accountService.findAll();
-        return ResponseEntity.ok(accounts);
     }
 
     @GetMapping("/me")

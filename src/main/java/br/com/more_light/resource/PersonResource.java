@@ -1,5 +1,6 @@
 package br.com.more_light.resource;
 
+import br.com.more_light.domain.Person;
 import br.com.more_light.dto.PersonDTO;
 import br.com.more_light.service.PersonService;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,9 @@ public class PersonResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonDTO> getPersonById(@PathVariable Long id) {
-        return ResponseEntity.ok(personService.getPersonById(id));
+        Person person = personService.getById(id);
+        PersonDTO personDto = personService.toDTO(person);
+        return ResponseEntity.ok(personDto);
     }
 
     @PostMapping
