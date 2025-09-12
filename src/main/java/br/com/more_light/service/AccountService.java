@@ -38,11 +38,6 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Account deactivate(Long id) {
-        Account account = findById(id);
-        account.setActive(false);
-        return accountRepository.save(account);
-    }
 
     public void delete(Long id) {
         Account account = findById(id);

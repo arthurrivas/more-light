@@ -30,8 +30,6 @@ public class Account implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private boolean active;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_person", referencedColumnName = "id")
     private Person person;

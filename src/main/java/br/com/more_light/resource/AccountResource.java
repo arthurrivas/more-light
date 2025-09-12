@@ -5,6 +5,7 @@ import br.com.more_light.dto.AccountDTO;
 import br.com.more_light.service.AccountService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -47,14 +48,6 @@ public class AccountResource {
         return ResponseEntity.ok(account);
     }
 
-
-    @PatchMapping("/{id}/deactivate")
-    public ResponseEntity<AccountDTO> deactivate(@PathVariable Long id) {
-        Account account = accountService.deactivate(id);
-        AccountDTO accountDTO = accountService.accountToAccountDTO(account);
-        return ResponseEntity.ok(accountDTO);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         accountService.delete(id);
@@ -68,7 +61,7 @@ public class AccountResource {
             @RequestParam(required = false) Boolean active,
             @RequestParam(required = false, name = "personName") String personName,
             @RequestParam(required = false, name = "personCpf") String personCpf,
-            Pageable pageable) {
+            @PageableDefault(sort = "name") Pageable pageable) {
         Page<Account> accounts = accountService.findAllPagedWithFilters(email, username, active, personName, personCpf, pageable);
         return ResponseEntity.ok(accounts);
     }
