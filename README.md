@@ -14,7 +14,7 @@ O projeto foi construído utilizando tecnologias modernas para garantir escalabi
 - **Banco de Dados:** PostgreSQL para armazenamento robusto de dados  
 - **Containerização:** Docker e Docker Compose para isolamento de ambiente  
 - **Documentação:** Swagger (OpenAPI) para testes de endpoints  
-- **Gerenciamento de Dependências:** Gradle ou Maven  
+- **Gerenciamento de Dependências:** Maven  
 
 ---
 
