@@ -11,18 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
-
-    public List<Account> findAll() {
-        return accountRepository.findAll();
-    }
 
     public Account findById(Long id) {
         return accountRepository.findById(id)

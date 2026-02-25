@@ -43,7 +43,6 @@ public class AuthService {
         personRepository.save(person);
 
         Account account = accountMapper.accountDtoToAccount(request);
-        account.setActive(true);
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         account.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         account.setPerson(person);
