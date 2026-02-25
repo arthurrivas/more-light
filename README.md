@@ -1,6 +1,6 @@
-# CityCare API
+# More-Light API
 
-O **CityCare API** é uma solução de backend desenvolvida para facilitar a comunicação entre cidadãos e a administração pública. A plataforma permite o registro e a gestão de ocorrências urbanas, como buracos em vias, falhas na iluminação pública, problemas de sinalização e alertas da defesa civil.
+Possivel solução de backend desenvolvida para facilitar a comunicação entre cidadãos e a administração pública. A plataforma permite o registro e a gestão de ocorrências urbanas, como buracos em vias, falhas na iluminação pública, problemas de sinalização e alertas da defesa civil.
 
 ---
 
