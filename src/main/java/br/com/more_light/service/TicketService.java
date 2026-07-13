@@ -4,7 +4,7 @@ import br.com.more_light.domain.Ticket;
 import br.com.more_light.domain.TicketStatus;
 import br.com.more_light.dto.TicketDTO;
 import br.com.more_light.mapper.TicketMapper;
-import br.com.more_light.repository.AccountRepository;
+import br.com.more_light.repository.AgentRepository;
 import br.com.more_light.repository.TicketRepository;
 import br.com.more_light.repository.TicketStatusRepository;
 import br.com.more_light.repository.specification.TicketSpecification;
@@ -19,17 +19,17 @@ import java.util.Optional;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
-    private final AccountRepository accountRepository;
+    private final AgentRepository agentRepository;
     private final TicketStatusRepository ticketStatusRepository;
 
     private final TicketMapper ticketMapper;
 
     public TicketService(TicketRepository ticketRepository, TicketMapper ticketMapper,
-                         TicketStatusRepository ticketStatusRepository,  AccountRepository accountRepository) {
+                         TicketStatusRepository ticketStatusRepository,  AgentRepository agentRepository) {
         this.ticketRepository = ticketRepository;
         this.ticketMapper = ticketMapper;
         this.ticketStatusRepository = ticketStatusRepository;
-        this.accountRepository = accountRepository;
+        this.agentRepository = agentRepository;
     }
 
     public Ticket save(Ticket ticket) {
@@ -43,7 +43,7 @@ public class TicketService {
 
     public Ticket assignAgent(Long ticketId, Long agentId) {
         Ticket ticket = ticketRepository.getReferenceById(ticketId);
-        accountRepository.findById(agentId).ifPresent(ticket::setAgent);
+        agentRepository.findById(agentId).ifPresent(ticket::setAgent);
         ticketRepository.save(ticket);
         return ticket;
     }
